@@ -129,9 +129,10 @@
   <ItemGroup>
     <ClCompile Include="Apu.cpp" />
     <ClCompile Include="Bank.cpp" />
-    <ClCompile Include="BartLisa.cpp" />
+    <ClCompile Include="Bart.cpp" />
     <ClCompile Include="Burns.cpp" />
     <ClCompile Include="Homer.cpp" />
+    <ClCompile Include="Lisa.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Marge.cpp" />
     <ClCompile Include="Person.cpp" />
@@ -139,9 +140,10 @@
   <ItemGroup>
     <ClInclude Include="Apu.h" />
     <ClInclude Include="Bank.h" />
-    <ClInclude Include="BartLisa.h" />
+    <ClInclude Include="Bart.h" />
     <ClInclude Include="Burns.h" />
     <ClInclude Include="Homer.h" />
+    <ClInclude Include="Lisa.h" />
     <ClInclude Include="Marge.h" />
     <ClInclude Include="Person.h" />
   </ItemGroup>
