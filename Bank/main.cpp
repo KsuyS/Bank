@@ -12,7 +12,6 @@
 void PrintState(const std::string& message, const Bank& bank, const Homer& homer, const Marge& marge,
     const Bart& bart, const Lisa& lisa, const Apu& apu, const Burns& burns)
 {
-    std::cout << "\n" << message << "\n";
     homer.PrintStatus();
     marge.PrintStatus();
     bart.PrintStatus();
@@ -44,7 +43,7 @@ int main()
 
     for (int i = 1; i <= iterations; ++i) 
     {
-        std::cout << "\n Итерация " << i << "\n";
+        std::cout << "\nИтерация " << i << "\n";
         homer.Act();
         marge.Act();
         bart.Act();
@@ -52,7 +51,7 @@ int main()
         apu.Act();
         burns.PaySalaryToHomer(homer, HOMER_SALARY);
         burns.Act();
-        PrintState("После итерации", bank, homer, marge, bart, lisa, apu, burns);
+        PrintState("После итерации: ", bank, homer, marge, bart, lisa, apu, burns);
     }
     return 0;
 }

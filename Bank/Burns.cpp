@@ -6,7 +6,7 @@ Burns::Burns(Money initialCash, Bank* bank): Person("Burns", initialCash, bank) 
 
 void Burns::Act() 
 {
-    std::cout << "Burns: владеет электростанцией и принимает средства.\n";
+    std::cout << "Бернс: владеет электростанцией и принимает средства.\n";
 }
 
 void Burns::PaySalaryToHomer(Person& homer, Money salary) 
@@ -16,15 +16,15 @@ void Burns::PaySalaryToHomer(Person& homer, Money salary)
         try 
         {
             bank->SendMoney(bankAccountId, homer.bankAccountId, salary);
-            std::cout << "Burns: выплатил зарплату Гомеру: " << salary << "\n";
+            std::cout << "Бернс: выплатил зарплату Гомеру: " << salary << "\n";
         }
         catch (const BankOperationError& e) 
         {
-            std::cout << "Burns: ошибка выплаты зарплаты -> " << e.what() << "\n";
+            std::cout << "Бернс: ошибка выплаты зарплаты -> " << e.what() << "\n";
         }
     }
     else 
     {
-        std::cout << "Burns: недостаточно средств для выплаты зарплаты Гомеру.\n";
+        std::cout << "Бернс: недостаточно средств для выплаты зарплаты Гомеру.\n";
     }
 }

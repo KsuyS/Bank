@@ -17,27 +17,27 @@ void Homer::Act()
             {
                 bank->DepositMoney(bankAccountId, diff);
                 cash -= diff;
-                std::cout << "Homer: положил " << diff << " на счёт.\n";
+                std::cout << "Гомер: положил " << diff << " на счёт.\n";
             }
             catch (const BankOperationError& e) 
             {
-                std::cout << "Homer: ошибка депозита -> " << e.what() << "\n";
+                std::cout << "Гомер: ошибка депозита -> " << e.what() << "\n";
             }
         }
         else 
         {
-            std::cout << "Homer: недостаточно личных наличных для депозита (требуется " << diff << ", имеется " << cash << ").\n";
+            std::cout << "Гомер: недостаточно личных наличных для депозита (требуется " << diff << ", имеется " << cash << ").\n";
         }
     }
 
     try 
     {
         bank->SendMoney(bankAccountId, marge.bankAccountId, HUSBAND_TO_WIFE_TRANSFER);
-        std::cout << "Homer: перевел " << HUSBAND_TO_WIFE_TRANSFER << " жене (Мардж).\n";
+        std::cout << "Гомер: перевел " << HUSBAND_TO_WIFE_TRANSFER << " жене (Мардж).\n";
     }
     catch (const BankOperationError& e) 
     {
-        std::cout << "Homer: ошибка перевода жене -> " << e.what() << "\n";
+        std::cout << "Гомер: ошибка перевода жене -> " << e.what() << "\n";
     }
 
     try 
@@ -45,20 +45,20 @@ void Homer::Act()
         bank->WithdrawMoney(bankAccountId, CHILDREN_ALLOWANCE);
         bart.cash += CHILDREN_ALLOWANCE / 2;
         lisa.cash += CHILDREN_ALLOWANCE / 2;
-        std::cout << "Homer: снял " << CHILDREN_ALLOWANCE << " для детей (по 10 каждому).\n";
+        std::cout << "Гомер: снял " << CHILDREN_ALLOWANCE << " для детей (по 10 каждому).\n";
     }
     catch (const BankOperationError& e) 
     {
-        std::cout << "Homer: ошибка снятия наличных -> " << e.what() << "\n";
+        std::cout << "Гомер: ошибка снятия наличных -> " << e.what() << "\n";
     }
 
     try 
     {
         bank->SendMoney(bankAccountId, burns.bankAccountId, ELECTRICITY_COST);
-        std::cout << "Homer: оплатил электричество " << ELECTRICITY_COST << ", переведя их Burns.\n";
+        std::cout << "Гомер: оплатил электричество " << ELECTRICITY_COST << ", переведя их Бернсу.\n";
     }
     catch (const BankOperationError& e) 
     {
-        std::cout << "Homer: ошибка оплаты электричества -> " << e.what() << "\n";
+        std::cout << "Гомер: ошибка оплаты электричества -> " << e.what() << "\n";
     }
 }

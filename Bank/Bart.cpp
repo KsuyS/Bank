@@ -10,10 +10,10 @@ void Bart::Act()
     {
         cash -= ITEM_COST;
         apu.cash += ITEM_COST;
-        std::cout << "Bart: купил товар за " << ITEM_COST << " наличными у Апу.\n";
+        std::cout << "Барт: купил товар за " << ITEM_COST << " наличными у Апу.\n";
     }
     else 
     {
-        std::cout << "Bart: недостаточно наличных для покупки.\n";
+        std::cout << "Барт: недостаточно наличных для покупки.\n";
     }
 }

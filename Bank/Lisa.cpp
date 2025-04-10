@@ -2,8 +2,7 @@
 #include "Constants.h"
 #include <iostream>
 
-Lisa::Lisa(Money initialCash, Bank* bank, Person& apu)
-    : Person("Lisa", initialCash, bank), apu(apu) {}
+Lisa::Lisa(Money initialCash, Bank* bank, Person& apu): Person("Lisa", initialCash, bank), apu(apu) {}
 
 void Lisa::Act() 
 {
@@ -11,10 +10,10 @@ void Lisa::Act()
     {
         cash -= ITEM_COST;
         apu.cash += ITEM_COST;
-        std::cout << "Lisa: купила товар за " << ITEM_COST << " наличными у Аpu.\n";
+        std::cout << "Лиза: купила товар за " << ITEM_COST << " наличными у Апу.\n";
     }
     else 
     {
-        std::cout << "Lisa: недостаточно наличных для покупки.\n";
+        std::cout << "Лиза: недостаточно наличных для покупки.\n";
     }
 }
