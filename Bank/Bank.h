@@ -8,19 +8,15 @@
 using AccountId = unsigned long long;
 using Money = long long;
 
-class BankOperationError : public std::runtime_error {
+class BankOperationError : public std::runtime_error 
+{
 public:
     explicit BankOperationError(const std::string& message)
         : std::runtime_error(message) {}
 };
 
-class Bank {
-private:
-    Money cashInCirculation;
-    std::unordered_map<AccountId, Money> accounts;
-    mutable std::mutex bankMutex;
-    std::atomic<AccountId> nextAccountId;
-
+class Bank 
+{
 public:
     explicit Bank(Money initialCash);
 
@@ -37,4 +33,10 @@ public:
     bool TryWithdrawMoney(AccountId account, Money amount);
 
     void DepositMoney(AccountId account, Money amount);
+
+private:
+    Money m_cashInCirculation;
+    std::unordered_map<AccountId, Money> m_accounts;
+    mutable std::mutex m_bankMutex;
+    std::atomic<AccountId> m_nextAccountId;
 };

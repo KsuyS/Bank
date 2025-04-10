@@ -142,6 +142,7 @@
     <ClInclude Include="Bank.h" />
     <ClInclude Include="Bart.h" />
     <ClInclude Include="Burns.h" />
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="Homer.h" />
     <ClInclude Include="Lisa.h" />
     <ClInclude Include="Marge.h" />
