@@ -11,7 +11,7 @@ using Money = long long;
 class BankOperationError : public std::runtime_error 
 {
 public:
-    explicit BankOperationError(const std::string& message)
+    BankOperationError(const std::string& message)
         : std::runtime_error(message) {}
 };
 

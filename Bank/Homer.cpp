@@ -5,6 +5,9 @@
 Homer::Homer(Money initialCash, Bank* bank, Person& marge, Person& bart, Person& lisa, Burns& burns)
     : Person("Homer", initialCash, bank), marge(marge), bart(bart), lisa(lisa), burns(burns) {}
 
+// упростить логику Act: убрать проверки, просто перевести деньги жене, снять наличные детям, оплатить
+// электроэнергию, потом получить остаток и остаток уже закинуть на счет, перепроверить все Act у остальных персонажей
+
 void Homer::Act() 
 {
     Money required = HUSBAND_TO_WIFE_TRANSFER + CHILDREN_ALLOWANCE + ELECTRICITY_COST;

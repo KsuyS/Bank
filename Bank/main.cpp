@@ -1,4 +1,6 @@
-﻿#include <iostream>
+﻿// избавиться от мьютекса
+
+#include <iostream>
 #include <windows.h> 
 #include "Constants.h"
 #include "Bank.h"
@@ -18,8 +20,6 @@ void PrintState(const std::string& message, const Bank& bank, const Homer& homer
     lisa.PrintStatus();
     apu.PrintStatus();
     burns.PrintStatus();
-    std::cout << "Наличные банка: " << bank.GetCash() << "\n";
-    std::cout << "\n";
 }
 
 int main() 
@@ -51,6 +51,7 @@ int main()
         apu.Act();
         burns.PaySalaryToHomer(homer, HOMER_SALARY);
         burns.Act();
+        std::cout << "\n";
         PrintState("После итерации: ", bank, homer, marge, bart, lisa, apu, burns);
     }
     return 0;

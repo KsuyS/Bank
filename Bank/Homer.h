@@ -1,3 +1,6 @@
+// во всех классах персонажей
+// избавиться от: Person& marge; Person& bart; Person& lisa; Burns& burns; эти штуки не должны быть public
+// bank передавать по ссылке, не по указателю
 #pragma once
 #include "Person.h"
 #include "Burns.h"
