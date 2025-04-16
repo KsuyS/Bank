@@ -3,45 +3,35 @@
 #include "Bank.h"
 #include <iostream>
 
-Bank::Bank(Money initialCash) : m_cashInCirculation(initialCash), m_nextAccountId(1) 
+Bank::Bank(Money initialCash) : m_cashInCirculation(initialCash), m_nextAccountId(1)
 {
-    if (initialCash < 0) 
-    {
-        throw BankOperationError("Первоначальный размер денежных средств не может быть отрицательным!");
-    }
+    AssertIsNegativeSumm(initialCash, "Первоначальный размер денежных средств не может быть отрицательным!");
 }
 
-AccountId Bank::OpenAccount() 
+AccountId Bank::OpenAccount()
 {
-    std::lock_guard<std::mutex> lock(m_bankMutex);
     AccountId newId = m_nextAccountId++;
     m_accounts[newId] = 0;
     return newId;
 }
 
-Money Bank::CloseAccount(AccountId accountId) 
+Money Bank::CloseAccount(AccountId accountId)
 {
-    std::lock_guard<std::mutex> lock(m_bankMutex);
-    if (m_accounts.find(accountId) == m_accounts.end()) 
-    {
-        throw BankOperationError("Аккаунт не существует!");
-    }
+    AssertAccountIsCreated(accountId);
+
     Money balance = m_accounts[accountId];
     m_cashInCirculation += balance;
     m_accounts.erase(accountId);
     return balance;
 }
 
-void Bank::SendMoney(AccountId src, AccountId dst, Money amount) 
+void Bank::SendMoney(AccountId src, AccountId dst, Money amount)
 {
-    if (amount < 0) throw std::out_of_range("Невозможно отправить отрицательную сумму!");
+    AssertIsNegativeSumm(amount, "Невозможно отправить отрицательную сумму!");
+    AssertAccountIsCreated(src);
+    AssertAccountIsCreated(dst);
 
-    std::lock_guard<std::mutex> lock(m_bankMutex);
-    if (m_accounts.find(src) == m_accounts.end() || m_accounts.find(dst) == m_accounts.end()) 
-    {
-        throw BankOperationError("Неверный идентификатор учетной записи!");
-    }
-    if (m_accounts[src] < amount) 
+    if (m_accounts[src] < amount)
     {
         throw BankOperationError("Недостаточно средств!");
     }
@@ -50,41 +40,36 @@ void Bank::SendMoney(AccountId src, AccountId dst, Money amount)
     m_accounts[dst] += amount;
 }
 
-bool Bank::TrySendMoney(AccountId src, AccountId dst, Money amount) 
+bool Bank::TrySendMoney(AccountId src, AccountId dst, Money amount)
 {
-    try 
+    try
     {
         SendMoney(src, dst, amount);
         return true;
     }
-    catch (const BankOperationError&) 
+    catch (const BankOperationError&)
     {
         return false;
     }
 }
 
-Money Bank::GetCash() const 
+Money Bank::GetCash() const
 {
     return m_cashInCirculation;
 }
 
-Money Bank::GetAccountBalance(AccountId accountId) const 
+Money Bank::GetAccountBalance(AccountId accountId) const
 {
-    std::lock_guard<std::mutex> lock(m_bankMutex);
-    auto it = m_accounts.find(accountId);
-    if (it == m_accounts.end()) 
-    {
-        throw BankOperationError("Аккаунт не найден!");
-    }
-    return it->second;
+    AssertAccountIsCreated(accountId);
+    return m_accounts.at(accountId);
 }
 
-void Bank::WithdrawMoney(AccountId account, Money amount) 
+void Bank::WithdrawMoney(AccountId account, Money amount)
 {
-    if (amount < 0) throw std::out_of_range("Невозможно снять отрицательную сумму!");
+    AssertIsNegativeSumm(amount, "Невозможно снять отрицательную сумму!");
+    AssertAccountIsCreated(account);
 
-    std::lock_guard<std::mutex> lock(m_bankMutex);
-    if (m_accounts.find(account) == m_accounts.end() || m_accounts[account] < amount) 
+    if (m_accounts[account] < amount)
     {
         throw BankOperationError("Недействительный вывод средств!");
     }
@@ -93,29 +78,45 @@ void Bank::WithdrawMoney(AccountId account, Money amount)
     m_cashInCirculation += amount;
 }
 
-bool Bank::TryWithdrawMoney(AccountId account, Money amount) 
+bool Bank::TryWithdrawMoney(AccountId account, Money amount)
 {
-    try 
+    try
     {
         WithdrawMoney(account, amount);
         return true;
     }
-    catch (const BankOperationError&) 
+    catch (const BankOperationError&)
     {
         return false;
     }
 }
 
-void Bank::DepositMoney(AccountId account, Money amount) 
+void Bank::DepositMoney(AccountId account, Money amount)
 {
-    if (amount < 0) throw std::out_of_range("Невозможно внести отрицательную сумму!");
+    AssertIsNegativeSumm(amount, "Невозможно внести отрицательную сумму!");
+    AssertAccountIsCreated(account);
 
-    std::lock_guard<std::mutex> lock(m_bankMutex);
-    if (m_accounts.find(account) == m_accounts.end() || m_cashInCirculation < amount) 
+    if (m_cashInCirculation < amount)
     {
         throw BankOperationError("Недействительный депозит!");
     }
 
     m_cashInCirculation -= amount;
     m_accounts[account] += amount;
+}
+
+void Bank::AssertAccountIsCreated(AccountId accountId) const
+{
+    if (m_accounts.find(accountId) == m_accounts.end())
+    {
+        throw BankOperationError("Аккаунт не существует!");
+    }
+}
+
+void Bank::AssertIsNegativeSumm(Money amount, const std::string& errorMessage) const
+{
+    if (amount < 0)
+    {
+        throw std::out_of_range(errorMessage);
+    }
 }

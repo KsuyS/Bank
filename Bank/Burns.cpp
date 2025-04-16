@@ -2,29 +2,18 @@
 #include "Constants.h"
 #include <iostream>
 
-Burns::Burns(Money initialCash, Bank* bank): Person("Burns", initialCash, bank) {}
+Burns::Burns(Money initialCash, Bank* bank, Person& homer): Person("Burns", initialCash, bank), homer(homer) {}
 
 void Burns::Act() 
 {
     std::cout << "Бернс: владеет электростанцией и принимает средства.\n";
-}
-
-void Burns::PaySalaryToHomer(Person& homer, Money salary) 
-{
-    if (bank->GetAccountBalance(bankAccountId) >= salary) 
+    try
     {
-        try 
-        {
-            bank->SendMoney(bankAccountId, homer.bankAccountId, salary);
-            std::cout << "Бернс: выплатил зарплату Гомеру: " << salary << "\n";
-        }
-        catch (const BankOperationError& e) 
-        {
-            std::cout << "Бернс: ошибка выплаты зарплаты -> " << e.what() << "\n";
-        }
+        bank.SendMoney(bankAccountId, homer.bankAccountId, HOMER_SALARY);
+        std::cout << "Бернс: выплатил зарплату " << HUSBAND_TO_WIFE_TRANSFER << " Гомеру.\n";
     }
-    else 
+    catch (const BankOperationError& e)
     {
-        std::cout << "Бернс: недостаточно средств для выплаты зарплаты Гомеру.\n";
+        std::cout << "Бернс: ошибка выплаты зарплаты -> " << e.what() << "\n";
     }
 }

@@ -49,7 +49,6 @@ int main()
         bart.Act();
         lisa.Act();
         apu.Act();
-        burns.PaySalaryToHomer(homer, HOMER_SALARY);
         burns.Act();
         std::cout << "\n";
         PrintState("После итерации: ", bank, homer, marge, bart, lisa, apu, burns);

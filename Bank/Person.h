@@ -8,9 +8,9 @@ public:
     std::string name;
     Money cash;
     AccountId bankAccountId;
-    Bank* bank;
+    Bank& bank;
 
-    Person(const std::string& name, Money initialCash, Bank* bank);
+    Person(const std::string& name, Money initialCash, Bank& bank);
     virtual ~Person() = default;
 
     Money GetBankBalance() const;

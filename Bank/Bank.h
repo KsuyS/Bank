@@ -1,8 +1,6 @@
 #pragma once
-
 #include <unordered_map>
 #include <stdexcept>
-#include <mutex>
 #include <atomic>
 
 using AccountId = unsigned long long;
@@ -37,6 +35,7 @@ public:
 private:
     Money m_cashInCirculation;
     std::unordered_map<AccountId, Money> m_accounts;
-    mutable std::mutex m_bankMutex;
     std::atomic<AccountId> m_nextAccountId;
+    void AssertAccountIsCreated(AccountId accountId) const;
+    void AssertIsNegativeSumm(Money amount, const std::string& errorMessage) const;
 };
