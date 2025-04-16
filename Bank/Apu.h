@@ -5,7 +5,8 @@
 class Apu : public Person 
 {
 public:
-    Burns& burns;
-    Apu(Money initialCash, Bank* bank, Burns& burns);
+    Apu(Money initialCash, Bank& bank, Person& m_burns);
     void Act() override;
+private:
+    Person& m_burns;
 };

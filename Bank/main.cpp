@@ -1,5 +1,4 @@
 ﻿// избавиться от мьютекса
-
 #include <iostream>
 #include <windows.h> 
 #include "Constants.h"
@@ -14,6 +13,7 @@
 void PrintState(const std::string& message, const Bank& bank, const Homer& homer, const Marge& marge,
     const Bart& bart, const Lisa& lisa, const Apu& apu, const Burns& burns)
 {
+    std::cout << message << "\n";
     homer.PrintStatus();
     marge.PrintStatus();
     bart.PrintStatus();
@@ -22,25 +22,29 @@ void PrintState(const std::string& message, const Bank& bank, const Homer& homer
     burns.PrintStatus();
 }
 
-int main() 
+int GetIterations(int argc, char* argv[])
 {
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
+    int iterations = 0;
+    if (argc > 1)
+    {
+        iterations = atoi(argv[1]);
+    }
 
-    Bank bank(INITIAL_BANK_CASH);
-    Burns burns(BURNS_CASH, &bank);
-    Apu apu(APU_CASH, &bank, burns);
-    Marge marge(MARGE_CASH, &bank, apu);
-    Bart bart(BART_CASH, &bank, apu);
-    Lisa lisa(LISA_CASH, &bank, apu);
-    Homer homer(HOMER_CASH, &bank, marge, bart, lisa, burns);
+    if (iterations <= 0)
+    {
+        std::cout << "Введите количество итераций: ";
+        std::cin >> iterations;
+        if (iterations <= 0)
+        {
+            std::cout << "Ошибка: количество итераций должно быть положительным\n";
+            exit(1);
+        }
+    }
+    return iterations;
+}
 
-    PrintState("Начальные данные:", bank, homer, marge, bart, lisa, apu, burns);
-
-    int iterations;
-    std::cout << "Введите количество итераций: ";
-    std::cin >> iterations;
-
+void RunSimulation(int iterations, Bank& bank, Homer& homer, Marge& marge, Bart& bart, Lisa& lisa, Apu& apu, Burns& burns)
+{
     for (int i = 1; i <= iterations; ++i) 
     {
         std::cout << "\nИтерация " << i << "\n";
@@ -50,8 +54,27 @@ int main()
         lisa.Act();
         apu.Act();
         burns.Act();
-        std::cout << "\n";
-        PrintState("После итерации: ", bank, homer, marge, bart, lisa, apu, burns);
+        PrintState("После итерации:", bank, homer, marge, bart, lisa, apu, burns);
     }
+}
+
+int main(int argc, char* argv[])
+{
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+
+    int iterations = GetIterations(argc, argv);
+    Bank bank(INITIAL_BANK_CASH);
+    Burns burns(BURNS_CASH, bank);
+    Apu apu(APU_CASH, bank, burns);
+    Marge marge(MARGE_CASH, bank, apu);
+    Bart bart(BART_CASH, bank, apu);
+    Lisa lisa(LISA_CASH, bank, apu);
+    Homer homer(HOMER_CASH, bank, marge, bart, lisa, burns);
+    burns.SetHomer(homer);
+
+    PrintState("Начальные данные:", bank, homer, marge, bart, lisa, apu, burns);
+    RunSimulation(iterations, bank, homer, marge, bart, lisa, apu, burns);
+
     return 0;
 }

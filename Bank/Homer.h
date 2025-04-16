@@ -1,5 +1,5 @@
 // во всех классах персонажей
-// избавиться от: Person& marge; Person& bart; Person& lisa; Burns& burns; эти штуки не должны быть public
+// Person& marge; Person& bart; Person& lisa; Burns& burns; эти штуки не должны быть public
 // bank передавать по ссылке, не по указателю
 
 #pragma once
@@ -9,11 +9,16 @@
 class Homer : public Person
 {
 public:
-    Homer(Money initialCash, Bank& bank, Person& m_marge, Person& m_bart, Person& m_lisa, Burns& m_burns);
+    Homer(Money initialCash, Bank& bank, Person& m_marge, Person& m_bart, Person& m_lisa, Person& m_burns);
     void Act() override;
+
 private:
     Person& m_marge;
     Person& m_bart;
     Person& m_lisa;
-    Burns& m_burns;
+    Person& m_burns;
+    void TransferToWife();
+    void WithdrawForChildren();
+    void PayElectricity();
+    void DepositRemainingCash();
 };

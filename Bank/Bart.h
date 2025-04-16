@@ -4,7 +4,8 @@
 class Bart : public Person 
 {
 public:
-    Person& apu;
-    Bart(Money initialCash, Bank* bank, Person& apu);
+    Bart(Money initialCash, Bank& bank, Person& m_apu);
     void Act() override;
+private:
+    Person& m_apu;
 };

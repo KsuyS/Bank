@@ -1,13 +1,15 @@
-// выпалата зарплаты - это перевод денег, по сути зачем новый метод для этого
+// выпалата зарплаты - это перевод денег, зачем новый метод для этого
 
 #pragma once
 #include "Person.h"
 #include "Homer.h"
 
-class Burns : public Person 
+class Burns : public Person
 {
 public:
-    Person& homer;
-    Burns(Money initialCash, Bank* bank, Person& homer);
+    Burns(Money initialCash, Bank& bank);
+    void SetHomer(Person& homer);
     void Act() override;
+private:
+    Person* m_homer = nullptr;
 };

@@ -1,68 +1,71 @@
-// упростить логику Act: убрать проверки, просто перевести деньги жене, снять наличные детям, оплатить
-// электроэнергию, потом получить остаток и остаток уже закинуть на счет, перепроверить все Act у остальных персонажей
+// упростить логику Act()
 
 #include "Homer.h"
 #include "Constants.h"
 #include <iostream>
 
-
-Homer::Homer(Money initialCash, Bank& bank, Person& marge, Person& bart, Person& lisa, Burns& burns)
+Homer::Homer(Money initialCash, Bank& bank, Person& marge, Person& bart, Person& lisa, Person& burns)
     : Person("Homer", initialCash, bank), m_marge(marge), m_bart(bart), m_lisa(lisa), m_burns(burns) {}
 
-void Homer::Act() 
+void Homer::Act()
 {
-    Money required = HUSBAND_TO_WIFE_TRANSFER + CHILDREN_ALLOWANCE + ELECTRICITY_COST;
+    TransferToWife();
+    WithdrawForChildren();
+    PayElectricity();
+    DepositRemainingCash();
+}
 
-    if (bank.GetAccountBalance(bankAccountId) < required) {
-        Money diff = required - bank.GetAccountBalance(bankAccountId);
-        if (cash >= diff) 
-        {
-            try 
-            {
-                bank.DepositMoney(bankAccountId, diff);
-                cash -= diff;
-                std::cout << "Гомер: положил " << diff << " на счёт.\n";
-            }
-            catch (const BankOperationError& e) 
-            {
-                std::cout << "Гомер: ошибка депозита -> " << e.what() << "\n";
-            }
-        }
-        else 
-        {
-            std::cout << "Гомер: недостаточно личных наличных для депозита (требуется " << diff << ", имеется " << cash << ").\n";
-        }
-    }
-
-    try 
+void Homer::TransferToWife()
+{
+    if (bank.TrySendMoney(bankAccountId, m_marge.bankAccountId, HUSBAND_TO_WIFE_TRANSFER))
     {
-        bank.SendMoney(bankAccountId, m_marge.bankAccountId, HUSBAND_TO_WIFE_TRANSFER);
         std::cout << "Гомер: перевел " << HUSBAND_TO_WIFE_TRANSFER << " жене (Мардж).\n";
     }
-    catch (const BankOperationError& e) 
+    else
     {
-        std::cout << "Гомер: ошибка перевода жене -> " << e.what() << "\n";
+        std::cout << "Гомер: не удалось перевести деньги жене.\n";
     }
+}
 
-    try 
+void Homer::WithdrawForChildren()
+{
+    if (bank.TryWithdrawMoney(bankAccountId, CHILDREN_ALLOWANCE))
     {
-        bank.WithdrawMoney(bankAccountId, CHILDREN_ALLOWANCE);
         m_bart.cash += CHILDREN_ALLOWANCE / 2;
         m_lisa.cash += CHILDREN_ALLOWANCE / 2;
-        std::cout << "Гомер: снял " << CHILDREN_ALLOWANCE << " для детей (по 10 каждому).\n";
+        std::cout << "Гомер: снял " << CHILDREN_ALLOWANCE << " для детей (по " << (CHILDREN_ALLOWANCE / 2) << " каждому).\n";
     }
-    catch (const BankOperationError& e) 
+    else
     {
-        std::cout << "Гомер: ошибка снятия наличных -> " << e.what() << "\n";
+        std::cout << "Гомер: не удалось снять наличные для детей.\n";
     }
+}
 
-    try 
+void Homer::PayElectricity()
+{
+    if (bank.TrySendMoney(bankAccountId, m_burns.bankAccountId, ELECTRICITY_COST))
     {
-        bank.SendMoney(bankAccountId, m_burns.bankAccountId, ELECTRICITY_COST);
         std::cout << "Гомер: оплатил электричество " << ELECTRICITY_COST << ", переведя их Бернсу.\n";
     }
-    catch (const BankOperationError& e) 
+    else
     {
-        std::cout << "Гомер: ошибка оплаты электричества -> " << e.what() << "\n";
+        std::cout << "Гомер: не удалось оплатить электричество.\n";
+    }
+}
+
+void Homer::DepositRemainingCash()
+{
+    if (cash > 0)
+    {
+        try
+        {
+            bank.DepositMoney(bankAccountId, cash);
+            std::cout << "Гомер: положил оставшиеся " << cash << " на счёт.\n";
+            cash = 0;
+        }
+        catch (const BankOperationError& e)
+        {
+            std::cout << "Гомер: ошибка депозита -> " << e.what() << "\n";
+        }
     }
 }

@@ -4,7 +4,8 @@
 class Marge : public Person 
 {
 public:
-    Person& apu;
-    Marge(Money initialCash, Bank* bank, Person& apu);
+    Marge(Money initialCash, Bank& bank, Person& m_apu);
     void Act() override;
+private:
+    Person& m_apu;
 };

@@ -4,7 +4,8 @@
 class Lisa : public Person 
 {
 public:
-    Person& apu;
-    Lisa(Money initialCash, Bank* bank, Person& apu);
+    Lisa(Money initialCash, Bank& bank, Person& m_apu);
     void Act() override;
+private:
+    Person& m_apu;
 };
