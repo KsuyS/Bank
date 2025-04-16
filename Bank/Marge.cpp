@@ -6,7 +6,7 @@ Marge::Marge(Money initialCash, Bank& bank, Person& apu) : Person("Marge", initi
 
 void Marge::Act()
 {
-    if (bank.TrySendMoney(bankAccountId, m_apu.bankAccountId, FOOD_PAYMENT)) 
+    if (GetBank().TrySendMoney(GetBankAccountId(), m_apu.GetBankAccountId(), FOOD_PAYMENT))
     {
         std::cout << "Мардж: перевела " << FOOD_PAYMENT << " Апу за продукты.\n";
     }

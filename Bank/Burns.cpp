@@ -15,7 +15,7 @@ void Burns::Act()
 {
     std::cout << "Бернс: владеет электростанцией и принимает средства.\n";
     if (m_homer != nullptr) {
-        if (bank.TrySendMoney(bankAccountId, m_homer->bankAccountId, HOMER_SALARY)) 
+        if (GetBank().TrySendMoney(GetBankAccountId(), m_homer->GetBankAccountId(), HOMER_SALARY))
         {
             std::cout << "Бернс: выплатил зарплату " << HOMER_SALARY << " Гомеру.\n";
         }

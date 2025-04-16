@@ -17,7 +17,7 @@ void Homer::Act()
 
 void Homer::TransferToWife()
 {
-    if (bank.TrySendMoney(bankAccountId, m_marge.bankAccountId, HUSBAND_TO_WIFE_TRANSFER))
+    if (GetBank().TrySendMoney(GetBankAccountId(), m_marge.GetBankAccountId(), HUSBAND_TO_WIFE_TRANSFER))
     {
         std::cout << "Гомер: перевел " << HUSBAND_TO_WIFE_TRANSFER << " жене (Мардж).\n";
     }
@@ -29,10 +29,10 @@ void Homer::TransferToWife()
 
 void Homer::WithdrawForChildren()
 {
-    if (bank.TryWithdrawMoney(bankAccountId, CHILDREN_ALLOWANCE))
+    if (GetBank().TryWithdrawMoney(GetBankAccountId(), CHILDREN_ALLOWANCE))
     {
-        m_bart.cash += CHILDREN_ALLOWANCE / 2;
-        m_lisa.cash += CHILDREN_ALLOWANCE / 2;
+        m_bart.SetCash(m_bart.GetCash() + CHILDREN_ALLOWANCE / 2);
+        m_lisa.SetCash(m_lisa.GetCash() + CHILDREN_ALLOWANCE / 2);
         std::cout << "Гомер: снял " << CHILDREN_ALLOWANCE << " для детей (по " << (CHILDREN_ALLOWANCE / 2) << " каждому).\n";
     }
     else
@@ -43,7 +43,7 @@ void Homer::WithdrawForChildren()
 
 void Homer::PayElectricity()
 {
-    if (bank.TrySendMoney(bankAccountId, m_burns.bankAccountId, ELECTRICITY_COST))
+    if (GetBank().TrySendMoney(GetBankAccountId(), m_burns.GetBankAccountId(), ELECTRICITY_COST))
     {
         std::cout << "Гомер: оплатил электричество " << ELECTRICITY_COST << ", переведя их Бернсу.\n";
     }
@@ -55,13 +55,13 @@ void Homer::PayElectricity()
 
 void Homer::DepositRemainingCash()
 {
-    if (cash > 0)
+    if (GetCash() > 0)
     {
         try
         {
-            bank.DepositMoney(bankAccountId, cash);
-            std::cout << "Гомер: положил оставшиеся " << cash << " на счёт.\n";
-            cash = 0;
+            GetBank().DepositMoney(GetBankAccountId(), GetCash());
+            std::cout << "Гомер: положил оставшиеся " << GetCash() << " на счёт.\n";
+            SetCash(0);
         }
         catch (const BankOperationError& e)
         {

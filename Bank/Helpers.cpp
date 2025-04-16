@@ -44,15 +44,14 @@ Money GetOverallInitialTotal()
 void CheckBankSystemConsistency(Bank& bank, const Homer& homer, const Marge& marge,
     const Bart& bart, const Lisa& lisa, const Apu& apu, const Burns& burns)
 {
-    Money personsCash = homer.cash + marge.cash + bart.cash + lisa.cash + apu.cash + burns.cash;
+    Money personsCash = homer.GetCash() + marge.GetCash() + bart.GetCash() + lisa.GetCash() + apu.GetCash() + burns.GetCash();
     Money bankCash = bank.GetCash();
-
-    Money accountsTotal = bank.GetAccountBalance(homer.bankAccountId) +
-        bank.GetAccountBalance(marge.bankAccountId) +
-        bank.GetAccountBalance(bart.bankAccountId) +
-        bank.GetAccountBalance(lisa.bankAccountId) +
-        bank.GetAccountBalance(apu.bankAccountId) +
-        bank.GetAccountBalance(burns.bankAccountId);
+    Money accountsTotal = bank.GetAccountBalance(homer.GetBankAccountId()) +
+        bank.GetAccountBalance(marge.GetBankAccountId()) +
+        bank.GetAccountBalance(bart.GetBankAccountId()) +
+        bank.GetAccountBalance(lisa.GetBankAccountId()) +
+        bank.GetAccountBalance(apu.GetBankAccountId()) +
+        bank.GetAccountBalance(burns.GetBankAccountId());
 
     Money overallTotal = personsCash + accountsTotal;
     Money expectedTotal = GetOverallInitialTotal();

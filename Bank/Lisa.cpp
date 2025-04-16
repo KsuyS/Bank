@@ -6,10 +6,10 @@ Lisa::Lisa(Money initialCash, Bank& bank, Person& apu): Person("Lisa", initialCa
 
 void Lisa::Act() 
 {
-    if (cash >= ITEM_COST) 
+    if (GetCash() >= ITEM_COST)
     {
-        cash -= ITEM_COST;
-        m_apu.cash += ITEM_COST;
+        SetCash(GetCash() - ITEM_COST);
+        m_apu.SetCash(m_apu.GetCash() + ITEM_COST);
         std::cout << "Лиза: купила товар за " << ITEM_COST << " наличными у Апу.\n";
     }
     else 

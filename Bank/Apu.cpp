@@ -6,13 +6,13 @@ Apu::Apu(Money initialCash, Bank& bank, Person& burns) : Person("Apu", initialCa
 
 void Apu::Act()
 {
-    if (cash > 0)
+    if (GetCash() > 0)
     {
         try
         {
-            bank.DepositMoney(bankAccountId, cash);
-            std::cout << "Апу: внёс " << cash << " на счет.\n";
-            cash = 0;
+            GetBank().DepositMoney(GetBankAccountId(), GetCash());
+            std::cout << "Апу: внёс " << GetCash() << " на счет.\n";
+            SetCash(0);
         }
         catch (const BankOperationError& e)
         {
@@ -20,7 +20,7 @@ void Apu::Act()
         }
     }
 
-    if (bank.TrySendMoney(bankAccountId, m_burns.bankAccountId, ELECTRICITY_COST)) 
+    if (GetBank().TrySendMoney(GetBankAccountId(), m_burns.GetBankAccountId(), ELECTRICITY_COST))
     {
         std::cout << "Апу: заплатил за электричество " << ELECTRICITY_COST << ", переведя их Бернсу.\n";
     }
