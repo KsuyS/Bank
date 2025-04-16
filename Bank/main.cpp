@@ -58,6 +58,64 @@ void RunSimulation(int iterations, Bank& bank, Homer& homer, Marge& marge, Bart&
     }
 }
 
+Money GetOverallInitialTotal() {
+    // These constants are defined in Constants.h
+    return INITIAL_BANK_CASH + HOMER_CASH + MARGE_CASH + BART_CASH + LISA_CASH + APU_CASH + BURNS_CASH;
+}
+
+void CheckBankSystemConsistency(Bank& bank, const Homer& homer, const Marge& marge,
+    const Bart& bart, const Lisa& lisa, const Apu& apu, const Burns& burns)
+{
+    // Считаем наличные деньги, которые есть у персонажей.
+    Money personsCash = homer.cash + marge.cash + bart.cash + lisa.cash + apu.cash + burns.cash;
+
+    // Получаем наличные деньги, зарегистрированные в банке.
+    Money bankCash = bank.GetCash();
+
+    // Суммируем деньги на счетах каждого участника.
+    Money accountsTotal = bank.GetAccountBalance(homer.bankAccountId) +
+        bank.GetAccountBalance(marge.bankAccountId) +
+        bank.GetAccountBalance(bart.bankAccountId) +
+        bank.GetAccountBalance(lisa.bankAccountId) +
+        bank.GetAccountBalance(apu.bankAccountId) +
+        bank.GetAccountBalance(burns.bankAccountId);
+
+    // Общая сумма денег в системе складывается из наличных денег,
+    // зарегистрированных в банке, денежных средств в кошельках участников 
+    // и безналичных денег на счетах.
+    Money overallTotal = personsCash + bankCash + accountsTotal;
+
+    // Ожидаемая общая сумма – сумма денег, которая изначально была положена в систему.
+    Money expectedTotal = GetOverallInitialTotal();
+
+    std::cout << "\n=== Финальное состояние системы ===\n";
+    std::cout << "Наличные денег у персонажей: " << personsCash << "\n";
+    std::cout << "Наличные деньги в банке: " << bankCash << "\n";
+    std::cout << "Сумма на счетах: " << accountsTotal << "\n";
+    std::cout << "Общая сумма денег: " << overallTotal << "\n";
+    std::cout << "Ожидаемая сумма денег: " << expectedTotal << "\n\n";
+
+    if (personsCash == bankCash)
+    {
+        std::cout << "Проверка: наличные деньги у персонажей совпадают с наличными деньгами в банке.\n";
+    }
+    else
+    {
+        std::cout << "Ошибка: наличные деньги участников (" << personsCash
+            << ") не равны наличным деньгам в банке (" << bankCash << ").\n";
+    }
+
+    if (overallTotal == expectedTotal)
+    {
+        std::cout << "Проверка: общая сумма денег соответствует ожидаемой.\n";
+    }
+    else
+    {
+        std::cout << "Ошибка: общая сумма денег (" << overallTotal
+            << ") не соответствует ожидаемой (" << expectedTotal << ").\n";
+    }
+}
+
 int main(int argc, char* argv[])
 {
     SetConsoleCP(1251);
@@ -75,6 +133,7 @@ int main(int argc, char* argv[])
 
     PrintState("Начальные данные:", bank, homer, marge, bart, lisa, apu, burns);
     RunSimulation(iterations, bank, homer, marge, bart, lisa, apu, burns);
+    CheckBankSystemConsistency(bank, homer, marge, bart, lisa, apu, burns);
 
     return 0;
 }
