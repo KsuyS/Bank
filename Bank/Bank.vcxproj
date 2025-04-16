@@ -135,6 +135,7 @@
     <ClCompile Include="Bank.cpp" />
     <ClCompile Include="Bart.cpp" />
     <ClCompile Include="Burns.cpp" />
+    <ClCompile Include="Helpers.cpp" />
     <ClCompile Include="Homer.cpp" />
     <ClCompile Include="Lisa.cpp" />
     <ClCompile Include="main.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="Bart.h" />
     <ClInclude Include="Burns.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="Helpers.h" />
     <ClInclude Include="Homer.h" />
     <ClInclude Include="Lisa.h" />
     <ClInclude Include="Marge.h" />

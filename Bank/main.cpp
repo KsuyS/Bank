@@ -1,6 +1,6 @@
 ﻿// избавиться от мьютекса
 #include <iostream>
-#include <windows.h> 
+#include <windows.h>
 #include "Constants.h"
 #include "Bank.h"
 #include "Homer.h"
@@ -9,43 +9,11 @@
 #include "Lisa.h"
 #include "Apu.h"
 #include "Burns.h"
-
-void PrintState(const std::string& message, const Bank& bank, const Homer& homer, const Marge& marge,
-    const Bart& bart, const Lisa& lisa, const Apu& apu, const Burns& burns)
-{
-    std::cout << message << "\n";
-    homer.PrintStatus();
-    marge.PrintStatus();
-    bart.PrintStatus();
-    lisa.PrintStatus();
-    apu.PrintStatus();
-    burns.PrintStatus();
-}
-
-int GetIterations(int argc, char* argv[])
-{
-    int iterations = 0;
-    if (argc > 1)
-    {
-        iterations = atoi(argv[1]);
-    }
-
-    if (iterations <= 0)
-    {
-        std::cout << "Введите количество итераций: ";
-        std::cin >> iterations;
-        if (iterations <= 0)
-        {
-            std::cout << "Ошибка: количество итераций должно быть положительным\n";
-            exit(1);
-        }
-    }
-    return iterations;
-}
+#include "Helpers.h"
 
 void RunSimulation(int iterations, Bank& bank, Homer& homer, Marge& marge, Bart& bart, Lisa& lisa, Apu& apu, Burns& burns)
 {
-    for (int i = 1; i <= iterations; ++i) 
+    for (int i = 1; i <= iterations; ++i)
     {
         std::cout << "\nИтерация " << i << "\n";
         homer.Act();
@@ -55,53 +23,6 @@ void RunSimulation(int iterations, Bank& bank, Homer& homer, Marge& marge, Bart&
         apu.Act();
         burns.Act();
         PrintState("После итерации:", bank, homer, marge, bart, lisa, apu, burns);
-    }
-}
-
-Money GetOverallInitialTotal() 
-{
-    return HOMER_CASH + MARGE_CASH + BART_CASH + LISA_CASH + APU_CASH + BURNS_CASH;
-}
-
-void CheckBankSystemConsistency(Bank& bank, const Homer& homer, const Marge& marge,
-    const Bart& bart, const Lisa& lisa, const Apu& apu, const Burns& burns)
-{
-    Money personsCash = homer.cash + marge.cash + bart.cash + lisa.cash + apu.cash + burns.cash;
-    Money bankCash = bank.GetCash();
-
-    Money accountsTotal = bank.GetAccountBalance(homer.bankAccountId) +
-        bank.GetAccountBalance(marge.bankAccountId) +
-        bank.GetAccountBalance(bart.bankAccountId) +
-        bank.GetAccountBalance(lisa.bankAccountId) +
-        bank.GetAccountBalance(apu.bankAccountId) +
-        bank.GetAccountBalance(burns.bankAccountId);
-
-    Money overallTotal = personsCash + accountsTotal;
-    Money expectedTotal = GetOverallInitialTotal();
-
-    std::cout << "\nФинальное состояние системы:\n";
-    std::cout << "Наличные денег у персонажей: " << personsCash << "\n";
-    std::cout << "Наличные деньги в банке: " << bankCash << "\n";
-    std::cout << "Сумма на счетах: " << accountsTotal << "\n";
-    std::cout << "Общая сумма денег: " << overallTotal << "\n";
-    std::cout << "Ожидаемая сумма денег: " << expectedTotal << "\n\n";
-
-    if (personsCash == bankCash)
-    {
-        std::cout << "Проверка: наличные деньги у персонажей совпадают с наличными деньгами в банке.\n";
-    }
-    else
-    {
-        std::cout << "Ошибка: наличные деньги участников (" << personsCash << ") не равны наличным деньгам в банке (" << bankCash << ").\n";
-    }
-
-    if (overallTotal == expectedTotal)
-    {
-        std::cout << "Проверка: общая сумма денег соответствует ожидаемой.\n";
-    }
-    else
-    {
-        std::cout << "Ошибка: общая сумма денег (" << overallTotal << ") не соответствует ожидаемой (" << expectedTotal << ").\n";
     }
 }
 
