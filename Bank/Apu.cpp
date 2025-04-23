@@ -1,5 +1,4 @@
 #include "Apu.h"
-#include "Constants.h"
 #include <iostream>
 
 Apu::Apu(Money initialCash, Bank& bank, Person& burns) : Person("Apu", initialCash, bank), m_burns(burns) {}
@@ -12,7 +11,7 @@ void Apu::Act()
         {
             GetBank().DepositMoney(GetBankAccountId(), GetCash());
             std::cout << "јпу: внЄс " << GetCash() << " на счет.\n";
-            SetCash(0);
+            ClearCash();
         }
         catch (const BankOperationError& e)
         {

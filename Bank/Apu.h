@@ -9,4 +9,5 @@ public:
     void Act() override;
 private:
     Person& m_burns;
+    const long long ELECTRICITY_COST = 100;
 };

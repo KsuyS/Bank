@@ -8,4 +8,5 @@ public:
     void Act() override;
 private:
     Person& m_apu;
+    const long long ITEM_COST = 2;
 };

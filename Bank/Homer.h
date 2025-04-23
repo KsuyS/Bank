@@ -1,7 +1,3 @@
-// во всех классах персонажей
-// Person& marge; Person& bart; Person& lisa; Burns& burns; эти штуки не должны быть public
-// bank передавать по ссылке, не по указателю
-
 #pragma once
 #include "Person.h"
 #include "Burns.h"
@@ -20,4 +16,7 @@ private:
     Person& m_bart;
     Person& m_lisa;
     Person& m_burns;
+    const long long HUSBAND_TO_WIFE_TRANSFER = 100;
+    const long long CHILDREN_ALLOWANCE = 20;
+    const long long ELECTRICITY_COST = 100;
 };

@@ -1,7 +1,9 @@
 #pragma once
 
+// константы в каждом из персонажей
+
 // Константы начальных средств
-constexpr long long INITIAL_BANK_CASH = 5000;
+//constexpr long long INITIAL_BANK_CASH = 5000;
 
 constexpr long long HOMER_CASH = 1900;
 constexpr long long MARGE_CASH = 900;

@@ -9,8 +9,10 @@ public:
     virtual ~Person() = default;
 
     std::string GetName() const;
-    Money GetCash() const;
-    void SetCash(Money newCash);
+    Money GetCash() const; 
+    //void SetCash(Money newCash); // AddCash (clear cash)
+    void AddCash(Money amount);
+    void ClearCash();
     AccountId GetBankAccountId() const;
     Bank& GetBank() const;
 

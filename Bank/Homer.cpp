@@ -1,7 +1,4 @@
-// упростить логику Act()
-
 #include "Homer.h"
-#include "Constants.h"
 #include <iostream>
 
 Homer::Homer(Money initialCash, Bank& bank, Person& marge, Person& bart, Person& lisa, Person& burns)
@@ -31,8 +28,8 @@ void Homer::WithdrawForChildren()
 {
     if (GetBank().TryWithdrawMoney(GetBankAccountId(), CHILDREN_ALLOWANCE))
     {
-        m_bart.SetCash(m_bart.GetCash() + CHILDREN_ALLOWANCE / 2);
-        m_lisa.SetCash(m_lisa.GetCash() + CHILDREN_ALLOWANCE / 2);
+        m_bart.AddCash(CHILDREN_ALLOWANCE / 2);
+        m_lisa.AddCash(CHILDREN_ALLOWANCE / 2);
         std::cout << "Гомер: снял " << CHILDREN_ALLOWANCE << " для детей (по " << (CHILDREN_ALLOWANCE / 2) << " каждому).\n";
     }
     else
@@ -61,7 +58,7 @@ void Homer::DepositRemainingCash()
         {
             GetBank().DepositMoney(GetBankAccountId(), GetCash());
             std::cout << "Гомер: положил оставшиеся " << GetCash() << " на счёт.\n";
-            SetCash(0);
+            ClearCash();
         }
         catch (const BankOperationError& e)
         {

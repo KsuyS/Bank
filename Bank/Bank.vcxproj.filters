@@ -42,7 +42,13 @@
     <ClCompile Include="Lisa.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Helpers.cpp">
+    <ClCompile Include="PrintHelpers.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHelpers.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsistencyHelpers.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,10 +77,13 @@
     <ClInclude Include="Lisa.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Constants.h">
+    <ClInclude Include="PrintHelpers.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Helpers.h">
+    <ClInclude Include="InputHelpers.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsistencyHelpers.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

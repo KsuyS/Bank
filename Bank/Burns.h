@@ -1,5 +1,3 @@
-// выпалата зарплаты - это перевод денег, зачем новый метод для этого
-
 #pragma once
 #include "Person.h"
 #include "Homer.h"
@@ -12,4 +10,5 @@ public:
     void Act() override;
 private:
     Person* m_homer = nullptr;
+    const long long HOMER_SALARY = 50;
 };

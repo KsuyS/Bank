@@ -27,9 +27,14 @@ Money Person::GetCash() const
     return m_cash;
 }
 
-void Person::SetCash(Money newCash)
+void Person::AddCash(Money amount)
 {
-    m_cash = newCash;
+    m_cash += amount;
+}
+
+void Person::ClearCash()
+{
+    m_cash = 0;
 }
 
 AccountId Person::GetBankAccountId() const

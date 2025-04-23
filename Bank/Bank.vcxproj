@@ -135,24 +135,27 @@
     <ClCompile Include="Bank.cpp" />
     <ClCompile Include="Bart.cpp" />
     <ClCompile Include="Burns.cpp" />
-    <ClCompile Include="Helpers.cpp" />
+    <ClCompile Include="ConsistencyHelpers.cpp" />
     <ClCompile Include="Homer.cpp" />
+    <ClCompile Include="InputHelpers.cpp" />
     <ClCompile Include="Lisa.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Marge.cpp" />
     <ClCompile Include="Person.cpp" />
+    <ClCompile Include="PrintHelpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Apu.h" />
     <ClInclude Include="Bank.h" />
     <ClInclude Include="Bart.h" />
     <ClInclude Include="Burns.h" />
-    <ClInclude Include="Constants.h" />
-    <ClInclude Include="Helpers.h" />
+    <ClInclude Include="ConsistencyHelpers.h" />
     <ClInclude Include="Homer.h" />
+    <ClInclude Include="InputHelpers.h" />
     <ClInclude Include="Lisa.h" />
     <ClInclude Include="Marge.h" />
     <ClInclude Include="Person.h" />
+    <ClInclude Include="PrintHelpers.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

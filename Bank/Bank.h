@@ -35,7 +35,7 @@ public:
 private:
     Money m_cashInCirculation;
     std::unordered_map<AccountId, Money> m_accounts;
-    std::atomic<AccountId> m_nextAccountId;
+    AccountId m_nextAccountId = 1;
     void AssertAccountIsCreated(AccountId accountId) const;
     void AssertIsNegativeSumm(Money amount, const std::string& errorMessage) const;
 };

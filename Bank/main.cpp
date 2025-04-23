@@ -1,5 +1,4 @@
-﻿// избавиться от мьютекса
-#include <iostream>
+﻿#include <iostream>
 #include <windows.h>
 #include "Constants.h"
 #include "Bank.h"
@@ -9,7 +8,11 @@
 #include "Lisa.h"
 #include "Apu.h"
 #include "Burns.h"
-#include "Helpers.h"
+#include "InputHelpers.h"
+#include "PrintHelpers.h"
+#include "ConsistencyHelpers.h"
+
+long long INITIAL_BANK_CASH = 5000;
 
 void RunSimulation(int iterations, Bank& bank, Homer& homer, Marge& marge, Bart& bart, Lisa& lisa, Apu& apu, Burns& burns)
 {

@@ -1,6 +1,4 @@
-﻿// вынести повторяющийся код в AssertAccountIsCreated и AssertIsNegativeSumm
-
-#include "Bank.h"
+﻿#include "Bank.h"
 #include <iostream>
 
 Bank::Bank(Money initialCash) : m_cashInCirculation(initialCash), m_nextAccountId(1)

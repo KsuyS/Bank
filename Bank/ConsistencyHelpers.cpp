@@ -1,42 +1,6 @@
-#include "Helpers.h"
+#include "ConsistencyHelpers.h"
 #include <iostream>
-#include <cstdlib>
 #include "Constants.h"
-
-// реорганизовать
-
-void PrintState(const std::string& message, const Bank& bank, const Homer& homer, const Marge& marge,
-    const Bart& bart, const Lisa& lisa, const Apu& apu, const Burns& burns)
-{
-    std::cout << message << "\n";
-    homer.PrintStatus();
-    marge.PrintStatus();
-    bart.PrintStatus();
-    lisa.PrintStatus();
-    apu.PrintStatus();
-    burns.PrintStatus();
-}
-
-int GetIterations(int argc, char* argv[])
-{
-    int iterations = 0;
-    if (argc > 1)
-    {
-        iterations = atoi(argv[1]);
-    }
-
-    if (iterations <= 0)
-    {
-        std::cout << "Введите количество итераций: ";
-        std::cin >> iterations;
-        if (iterations <= 0)
-        {
-            std::cout << "Ошибка: количество итераций должно быть положительным\n";
-            exit(1);
-        }
-    }
-    return iterations;
-}
 
 Money GetOverallInitialTotal()
 {
